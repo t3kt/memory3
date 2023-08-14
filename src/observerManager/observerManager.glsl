@@ -12,8 +12,9 @@ uniform float uLifespan;
 #define STATE_DEAD 0
 #define STATE_ALIVE 1
 
-layout(binding = 0) uniform atomic_uint acNextId;
-layout(binding = 1) uniform atomic_uint acEntityCount;
+/*layout(binding = 0) */uniform atomic_uint acNextId;
+/*layout(binding = 1) */uniform atomic_uint acEntityCount;
+uniform atomic_uint acSpawnPulse;
 
 out vec4 stateOut;
 layout(location = 1) out vec4 positionOut;
@@ -53,12 +54,14 @@ void main()
 		}
 	}
 	if (state == STATE_DEAD) {
-		if (uSpawn > 0. && atomicCounter(acEntityCount) < uMaxEntities) {
+		if (uSpawn > 0. && atomicCounter(acEntityCount) < uMaxEntities && atomicCompSwap(acSpawnPulse, 0, 1) == 0) {
 			id = int(atomicCounterIncrement(acNextId));
+			atomicCounterIncrement(acEntityCount);
 			position = texture(sSpawnPosIn, vUV.st).xyz;
 			velocity = vec3(0.);
 			age = 0.;
 			lifespan = uLifespan;
+			state = STATE_ALIVE;
 		} else {
 			id = 0;
 			lifespan = 0.;
@@ -69,4 +72,6 @@ void main()
 	}	
 
 	stateOut = TDOutputSwizzle(vec4(float(state), lifespan, age, float(id)));
+	positionOut = TDOutputSwizzle(vec4(position, 1.));
+	velocityOut = TDOutputSwizzle(vec4(velocity, 1.));
 }
