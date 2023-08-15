@@ -1,4 +1,5 @@
 uniform uint uMaxEntities;
+uniform uint uTargetEntityCount;
 uniform float uSpawn;
 uniform float uDeltaSec;
 uniform float uLifespan;
@@ -57,7 +58,7 @@ void main()
 		}
 	}
 	if (state == STATE_DEAD) {
-		if (uSpawn > 0. && atomicCounter(acEntityCount) < uMaxEntities && atomicCompSwap(acSpawnPulse, 0, 1) == 0) {
+		if (uSpawn > 0. && atomicCounter(acEntityCount) < min(uMaxEntities, uTargetEntityCount)) {
 			id = int(atomicCounterIncrement(acNextId));
 			atomicCounterIncrement(acEntityCount);
 			position = texture(sSpawnPosIn, vUV.st).xyz;
