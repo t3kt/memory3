@@ -1,4 +1,5 @@
 uniform uint uMaxEntities;
+uniform uint uTargetEntityCount;
 uniform float uSpawn;
 uniform float uDeltaSec;
 uniform float uLifespan;
@@ -8,6 +9,7 @@ uniform float uLifespan;
 #define sPositionIn sTD2DInputs[1]
 #define sVelocityIn sTD2DInputs[2]
 #define sSpawnPosIn sTD2DInputs[3]
+#define sForceIn sTD2DInputs[4]
 
 #define STATE_DEAD 0
 #define STATE_ALIVE 1
@@ -45,6 +47,8 @@ void main()
 	int id = int(stateVals.w);
 	vec3 position = texture(sPositionIn, vUV.st).xyz;
 	vec3 velocity = texture(sVelocityIn, vUV.st).xyz;
+	vec3 force = texture(sForceIn, vUV.st).xyz;
+
 	
 	if (state == STATE_ALIVE) {
 		age += uDeltaSec;
@@ -54,11 +58,12 @@ void main()
 		}
 	}
 	if (state == STATE_DEAD) {
-		if (uSpawn > 0. && atomicCounter(acEntityCount) < uMaxEntities && atomicCompSwap(acSpawnPulse, 0, 1) == 0) {
+		if (uSpawn > 0. && atomicCounter(acEntityCount) < min(uMaxEntities, uTargetEntityCount)) {
 			id = int(atomicCounterIncrement(acNextId));
 			atomicCounterIncrement(acEntityCount);
 			position = texture(sSpawnPosIn, vUV.st).xyz;
 			velocity = vec3(0.);
+			force = vec3(0.);
 			age = 0.;
 			lifespan = uLifespan;
 			state = STATE_ALIVE;
@@ -66,8 +71,11 @@ void main()
 			id = 0;
 			lifespan = 0.;
 			age = 0.;
+			velocity = vec3(0.);
+			force = vec3(0.);
 		}
 	} else if (state == STATE_ALIVE) {
+		//velocity += force * uDeltaSec;
 		position += velocity * uDeltaSec;
 	}	
 
