@@ -110,8 +110,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -127,8 +128,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -139,17 +141,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\TektTDCommon\CHOP_ApiWrapper.h" />
+    <ClInclude Include="..\TektTDCommon\CHOP_CPlusPlusBase.h" />
+    <ClInclude Include="..\TektTDCommon\CPlusPlus_Common.h" />
+    <ClInclude Include="..\TektTDCommon\DAT_CPlusPlusBase.h" />
+    <ClInclude Include="..\TektTDCommon\GL_Extensions.h" />
+    <ClInclude Include="..\TektTDCommon\SOP_CPlusPlusBase.h" />
+    <ClInclude Include="..\TektTDCommon\TDChannels.h" />
+    <ClInclude Include="..\TektTDCommon\TDParameters.h" />
+    <ClInclude Include="..\TektTDCommon\TDSettings.h" />
+    <ClInclude Include="..\TektTDCommon\TDValues.h" />
+    <ClInclude Include="..\TektTDCommon\TektCommon.h" />
+    <ClInclude Include="..\TektTDCommon\TOP_CPlusPlusBase.h" />
+    <ClInclude Include="..\TektTDCommon\ValueRange.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\TektTDCommon\TDChannels.cpp" />
+    <ClCompile Include="..\TektTDCommon\TDParameters.cpp" />
+    <ClCompile Include="..\TektTDCommon\TDSettings.cpp" />
+    <ClCompile Include="..\TektTDCommon\TektCommon.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Memory3Core.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
