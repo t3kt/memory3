@@ -159,7 +159,10 @@
     <ClInclude Include="ConnectionManager.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityBuffer.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="SimObject.h" />
+    <ClInclude Include="Simulation.h" />
+    <ClInclude Include="SimulationChannels.h" />
     <ClInclude Include="SimulationState.h" />
   </ItemGroup>
   <ItemGroup>
@@ -172,7 +175,10 @@
     <ClCompile Include="ConnectionManager.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityBuffer.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SimObject.cpp" />
+    <ClCompile Include="Simulation.cpp" />
+    <ClCompile Include="SimulationChannels.cpp" />
     <ClCompile Include="SimulationState.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

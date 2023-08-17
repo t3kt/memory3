@@ -11,20 +11,29 @@ class Entity : public SimObject {
 public:
   EntityId id = invalidId;
   bool alive = false;
+  float lifeAmount = 0.0f;
+  float age = 0.0f;
 
-  TD::Position position;
+  TD::Vector position;
   TD::Vector velocity;
   TD::Vector rotation;
   TD::Vector spin;
+  TD::Vector scale;
+
+  int connectionCount;
 
   virtual void reset() override {
     SimObject::reset();
     id = invalidId;
     alive = false;
-    position = TD::Position();
+    lifeAmount = 0.0f;
+    age = 0.0f;
+    position = TD::Vector();
     velocity = TD::Vector();
     rotation = TD::Vector();
     spin = TD::Vector();
+    scale = TD::Vector();
+    connectionCount = 0;
   }
 };
 
@@ -41,12 +50,10 @@ public:
     objectType = ObjectType::OBSERVER;
   }
 
-  float age = 0.0f;
   float lifespan = 0.0f;
 
   virtual void reset() override {
     Entity::reset();
-    age = 0.0f;
     lifespan = 0.0f;
   }
 };
