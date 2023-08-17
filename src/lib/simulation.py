@@ -48,6 +48,11 @@ class SimulationContent:
 	observers: List[Observer] = field(default_factory=list)
 	occurrences: List[Occurrence] = field(default_factory=list)
 	connections: List[Connection] = field(default_factory=list)
+	lastId: ObjectId = InvalidId
+
+	def getNextId(self):
+		self.lastId += 1
+		return self.lastId
 
 	def getObserverById(self, obsId: ObjectId) -> Optional[Observer]:
 		for obs in self.observers:
